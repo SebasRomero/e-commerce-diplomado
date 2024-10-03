@@ -6,7 +6,19 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    const body = {
+      email: data.email,
+      password: data.password
+    }
+    const responseReq = await fetch("https://backend-diplom.fly.dev/auth/login", {
+      body: body,
+      method: "POST"
+    })
+
+    const response = await responseReq.json()
+    console.log(response)
+  };
   console.log(errors);
 
   return (
