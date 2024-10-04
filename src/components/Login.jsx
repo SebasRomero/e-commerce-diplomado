@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -26,14 +28,24 @@ const Login = () => {
       );
 
       const response = await responseReq.json();
-      localStorage.setItem("accessToken", response.access_token)
-      localStorage.setItem("user", response.user.toString())
-      /* window.location.reload() */
+      localStorage.setItem("accessToken", response.access_token);
+      response.user;
+      localStorage.setItem("user", JSON.stringify(response.user));
+      if (isAdmin) {
+        navigate("/adminPanel");
+      } else {
+        navigate("/product");
+        /* window.location.reload(); */
+      }
       console.log(response);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  function isAdmin(role) {
+    return role.some((role) => role == "admin");
+  }
 
   return (
     <div className="flex items-center justify-center pt-[10%]">
