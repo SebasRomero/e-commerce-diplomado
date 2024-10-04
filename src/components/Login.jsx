@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { isAdmin } from "./functions/functions";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,11 +32,12 @@ const Login = () => {
       localStorage.setItem("accessToken", response.access_token);
       response.user;
       localStorage.setItem("user", JSON.stringify(response.user));
-      if (isAdmin) {
-        navigate("/adminPanel");
+      if (isAdmin(response.user.roles)) {
+        navigate("/admin-panel");
+        window.location.reload();
       } else {
         navigate("/product");
-        /* window.location.reload(); */
+        window.location.reload();
       }
       console.log(response);
     } catch (error) {
@@ -43,9 +45,7 @@ const Login = () => {
     }
   };
 
-  function isAdmin(role) {
-    return role.some((role) => role == "admin");
-  }
+
 
   return (
     <div className="flex items-center justify-center pt-[10%]">
