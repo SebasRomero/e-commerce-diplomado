@@ -27,6 +27,7 @@ const Products = () => {
               return (
                 <CardProduct
                   key={element.name}
+                  id={element._id}
                   name={element.name}
                   price={element.price}
                 />

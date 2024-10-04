@@ -1,37 +1,47 @@
 import { useEffect, useState } from "react";
+import { useNavigate} from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 export const CardProduct = (props) => {
+
   const [cart, setCart] = useState(() => {
-    // Retrieve cart from local storage, or set an empty array if none exists
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Store updated cart in local storage
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   function addToCart() {
     setCart((prevCart) => {
-      // Check if the item already exists in the cart
-      const existingProductIndex = prevCart.findIndex(item => item.name === props.name);
+      const existingProductIndex = prevCart.findIndex(
+        (item) => item.name === props.name
+      );
 
       if (existingProductIndex !== -1) {
-        // If the product is already in the cart, update the quantity
         const updatedCart = [...prevCart];
         updatedCart[existingProductIndex].quantity += 1;
         return updatedCart;
       } else {
-        // If the product is not in the cart, add it with quantity 1
-        return [...prevCart, { name: props.name, price: props.price, quantity: 1 }];
+        return [
+          ...prevCart,
+          { name: props.name, price: props.price, quantity: 1 },
+        ];
       }
     });
   }
 
+  const handleClick = () => {
+    navigate(`/product/${props.name}`);
+  };
+
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
+    <div
+      onClick={handleClick}
+      className=" cursor-pointer w-full max-w-sm bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700"
+    >
       <a href="#">
         <img
           className="p-8 rounded-t-lg"
@@ -50,7 +60,9 @@ export const CardProduct = (props) => {
             ${props.price}
           </span>
           <button
-            onClick={() => addToCart()}
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart()}}
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Add to cart

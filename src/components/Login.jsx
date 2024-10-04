@@ -6,20 +6,34 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = async (data) => {
     const body = {
-      email: data.email,
-      password: data.password
-    }
-    const responseReq = await fetch("https://backend-diplom.fly.dev/auth/login", {
-      body: body,
-      method: "POST"
-    })
+      email: data.Email,
+      password: data.Password,
+    };
 
-    const response = await responseReq.json()
-    console.log(response)
+    try {
+      const responseReq = await fetch(
+        "https://backend-diplom.fly.dev/auth/login",
+        {
+          body: JSON.stringify(body),
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const response = await responseReq.json();
+      localStorage.setItem("accessToken", response.access_token)
+      localStorage.setItem("user", response.user.toString())
+      /* window.location.reload() */
+      console.log(response);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
-  console.log(errors);
 
   return (
     <div className="flex items-center justify-center pt-[10%]">
@@ -30,10 +44,10 @@ const Login = () => {
         <h2 className="text-white">Login</h2>
         <div className="py-10">
           <input
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             placeholder="Email"
-            {...register("Email", { required: true, pattern: /^\S+@\S+$/i })}
+            {...register("Email", { required: true })}
           />
         </div>
         <div>

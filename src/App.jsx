@@ -5,9 +5,10 @@ import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import About_us from "./components/About_us";
-import Products from "./components/Products";
+import Products from "./components/Products/Products";
 import { CartProvider } from "./providers/cart-context";
 import Checkout from "./components/Checkout";
+import ProductDetails from "./components/Products/ProductDetails";
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/product" element={<Products />} />
+          <Route path="/product/:name" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About_us />} />
