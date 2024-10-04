@@ -9,6 +9,7 @@ import Products from "./components/Products/Products";
 import { CartProvider } from "./providers/cart-context";
 import Checkout from "./components/Checkout";
 import ProductDetails from "./components/Products/ProductDetails";
+import AdminPanel from "./components/Admin-panel/Admin-panel";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/about" element={<About_us />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>
