@@ -50,7 +50,7 @@ const ProductDetails = () => {
           
           <img
             className="w-full h-64 object-cover mb-4"
-            src={product.image} // Asegúrate de que el campo sea correcto
+            src={product.image} 
             alt={product.name}
           />
           
