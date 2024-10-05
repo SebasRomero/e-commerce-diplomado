@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { isAdmin } from "./functions/functions";
+import { useAuth } from "../providers/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { login } = useAuth();
   const onSubmit = async (data) => {
     const body = {
       email: data.Email,
@@ -29,8 +31,8 @@ const Login = () => {
       );
 
       const response = await responseReq.json();
+      login(response.access_token)
       localStorage.setItem("accessToken", response.access_token);
-      response.user;
       localStorage.setItem("user", JSON.stringify(response.user));
       if (isAdmin(response.user.roles)) {
         navigate("/admin-panel");
@@ -44,8 +46,6 @@ const Login = () => {
       console.error("Error:", error);
     }
   };
-
-
 
   return (
     <div className="flex items-center justify-center pt-[10%]">

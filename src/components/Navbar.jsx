@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { isAdmin as isAdminFunc } from "./functions/functions";
+import { useAuth } from "../providers/AuthContext";
 
 const Navbar = () => {
   const [cart, setCart] = useState([]);
@@ -9,6 +10,8 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const { logout } = useAuth();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const shoppingCart = localStorage.getItem("cart");
@@ -39,7 +42,9 @@ const Navbar = () => {
     localStorage.removeItem("accessToken");
     setIsAuthenticated(false);
     setIsDropdownOpen(false);
-    setIsAdmin(false)
+    setIsAdmin(false);
+    logout();
+    navigate("/")
     window.location.reload(); // Optionally reload the page on logout
   };
 
