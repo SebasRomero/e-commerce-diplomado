@@ -45,7 +45,7 @@ export const CardProduct = (props) => {
       <a href="#">
         <img
           className="p-8 rounded-t-lg"
-          src="/docs/images/products/apple-watch.png"
+          src={props.image}
           alt="product image"
         />
       </a>
