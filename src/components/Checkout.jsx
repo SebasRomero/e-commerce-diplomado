@@ -3,14 +3,17 @@ import CheckoutCard from "./CheckoutCard";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"; 
 import { host } from "../constants";
+import { useCart } from "../providers/cart-context";
 
 const Checkout = () => {
-  const [cart, setCart] = useState([]);
+   const { cart, removeFromCart } = useCart(); 
+  /* const [cart, setCart] = useState([]); */
   const [finalPrice, setFinalPrice] = useState(0);
   const [accessToken, setAccessToken] = useState(null);
   const [discount, setDiscount] = useState(0); 
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -23,7 +26,7 @@ const Checkout = () => {
     if (!storedCart || storedCart.length === 0) {
       navigate("/product");
     } else {
-      setCart(storedCart);
+      /* setCart(storedCart); */
       calculateFinalPrice(storedCart); 
     }
   }, [navigate]);
@@ -69,7 +72,8 @@ const Checkout = () => {
       })
       .filter((item) => item !== null);
 
-    setCart(updatedCart);
+    /* setCart(updatedCart); */
+    removeFromCart(name);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
@@ -109,6 +113,7 @@ const Checkout = () => {
       localStorage.removeItem("cart");
 
       navigate("/");
+      window.location.reload()
     } catch (error) {
       console.error("Error:", error);
     }

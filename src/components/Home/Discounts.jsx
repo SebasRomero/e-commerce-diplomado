@@ -1,13 +1,13 @@
 const Discounts = () => {
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="flex flex-col items-center h-screen mx-auto">
       <div className="flex flex-col items-center justify-center">
-        <span className="text-orange-500 text-6xl font-bold pb-6">
+        <span className="text-orange-500 text-4xl md:text-4xl lg:text-6xl font-bold pb-6">
           Amazing discounts
         </span>
         <h2 className="text-4xl text-white">Time limited!</h2>
       </div>
-      <div className="grid grid-cols-3 items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center">
         <div className="relative mt-16 ml-8 h-auto flex flex-col items-center bg-[#feeee7] p-5">
           <div className="w-64 h-64 overflow-hidden">
             <img

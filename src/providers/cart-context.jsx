@@ -30,8 +30,26 @@ const addToCart = (product) => {
   });
 };
 
+  const removeFromCart = (name) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart
+        .map(item => {
+          if (item.name === name) {
+            if (item.quantity > 1) {
+              return { ...item, quantity: item.quantity - 1 };
+            }
+            return null;
+          }
+          return item;
+        })
+        .filter(item => item !== null);
+      
+      return updatedCart;
+    });
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart }}>
+    <CartContext.Provider value={{ cart, addToCart , removeFromCart}}>
       {children}
     </CartContext.Provider>
   );

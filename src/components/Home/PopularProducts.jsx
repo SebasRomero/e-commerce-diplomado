@@ -44,7 +44,7 @@ const PopularProducts = () => {
       category: 'Hogar',
       originalPrice: '$120.00',
       discountedPrice: '$69.00',
-      imageUrl: 'https://example.com/image3.jpg',
+      imageUrl: 'https://m.media-amazon.com/images/I/71d3oFQjq3L._AC_UF894,1000_QL80_.jpg',
     },
     {
       id: 6,
@@ -52,7 +52,7 @@ const PopularProducts = () => {
       category: 'Electrodomésticos',
       originalPrice: '$350.00',
       discountedPrice: '$250.00',
-      imageUrl: 'https://example.com/image2.jpg',
+      imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTksG7Ifvht5ObuzXe1NKNPUZsxr_VITz3HGA&s',
     },
     {
       id: 7,
@@ -60,7 +60,7 @@ const PopularProducts = () => {
       category: 'Electrodomésticos',
       originalPrice: '$120.00',
       discountedPrice: '$69.00',
-      imageUrl: 'https://example.com/image3.jpg',
+      imageUrl: 'https://i.blogs.es/4f2baa/iphone-17-concepto/500_333.jpeg',
     },
   ];
 
@@ -84,7 +84,7 @@ const PopularProducts = () => {
   };
 
   return (
-    <div className=" h-screen w-[90%] mx-auto py-10 px-4">
+    <div className=" h-screen w-[68%] lg:w-[90%] mx-auto pt-[500px] md:pt-40 lg:pt-10 px-4">
       <h2 className="text-orange-500 text-4xl font-bold text-center mb-8">Popular Products</h2>
       <Slider {...settings}>
         {products.map((product) => (
