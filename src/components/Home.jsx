@@ -6,7 +6,7 @@ import PopularProducts from "./Home/PopularProducts"
 
 const Home = () => {
   return (
-    <div>
+    <div className="overflow-hidden">
       <Hero/>
       <Discounts/>
       <PopularProducts/>

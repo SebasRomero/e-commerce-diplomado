@@ -84,7 +84,7 @@ const PopularProducts = () => {
   };
 
   return (
-    <div className=" h-screen w-[68%] lg:w-[90%] mx-auto pt-[500px] md:pt-40 lg:pt-10 px-4">
+    <div className=" h-full w-[300px] lg:w-[90%] mx-auto pt-20 md:pt-40 lg:pt-16 lg:pb-16 px-4">
       <h2 className="text-orange-500 text-4xl font-bold text-center mb-8">Popular Products</h2>
       <Slider {...settings}>
         {products.map((product) => (

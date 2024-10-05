@@ -1,6 +1,6 @@
 const Discounts = () => {
   return (
-    <div className="flex flex-col items-center h-screen mx-auto">
+    <div className="flex flex-col items-center h-full mx-auto overflow-auto">
       <div className="flex flex-col items-center justify-center">
         <span className="text-orange-500 text-4xl md:text-4xl lg:text-6xl font-bold pb-6">
           Amazing discounts

@@ -19,7 +19,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="bg-[#0a0a0a] text-white py-8">
+    <footer className="bg-[#0a0a0a] text-white py-8 overflow-hidden">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         <div className="mb-4 md:mb-0">
           <h4 className="text-lg font-semibold">Luro</h4>
