@@ -47,10 +47,10 @@ const ProductDetails = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       {product ? (
         <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white p-6">
-          {/* Imagen del producto */}
+          
           <img
             className="w-full h-64 object-cover mb-4"
-            src={product.imageUrl} // Asegúrate de que el campo sea correcto
+            src={product.image} // Asegúrate de que el campo sea correcto
             alt={product.name}
           />
           
@@ -64,11 +64,6 @@ const ProductDetails = () => {
           <div className="text-xl font-semibold text-gray-700 mb-4">
             ${product.price}
           </div>
-
-          {/* Botón para agregar al carrito */}
-          <button onClick={addToCart} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-            Add to Cart
-          </button>
         </div>
       ) : (
         <p className="text-gray-500">Loading...</p>
