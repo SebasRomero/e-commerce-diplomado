@@ -31,6 +31,7 @@ const onSubmit = async (data) => {
     });
 
     const response = await responseReq.json();
+    console.log(response)
 
     if (response.access_token) {
       // Pass user data to the login function

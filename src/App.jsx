@@ -16,6 +16,7 @@ import Orders from "./components/Admin-panel/Orders";
 import {PrivateRoutes} from "./providers/PrivateRoutes";
 import { AdminRoutes } from "./providers/PrivateRoutes";
 import { AuthProvider } from "./providers/AuthContext";
+import Profile from "./components/profile/Profile";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/about" element={<About_us />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
 
             {/* Admin routes */}
