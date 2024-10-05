@@ -42,8 +42,10 @@ const onSubmit = async (data) => {
       // You can remove the window.location.reload() to avoid the unwanted reload
       if (isAdmin(response.user.roles)) {
         navigate("/admin-panel/product");
+        window.location.reload()
       } else {
         navigate("/product");
+        window.location.reload()
       }
     } else {
       // Handle login error

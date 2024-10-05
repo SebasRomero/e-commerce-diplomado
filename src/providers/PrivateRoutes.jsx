@@ -22,7 +22,7 @@ export const AdminRoutes = () => {
 
   // Check if the user is authenticated and an admin
   if (!isAuthenticated || !isAdmin) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/admin-panel/product" />;
   }
 
   return <Outlet />;

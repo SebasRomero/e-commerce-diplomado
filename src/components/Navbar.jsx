@@ -2,19 +2,23 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { isAdmin as isAdminFunc } from "./functions/functions";
 import { useAuth } from "../providers/AuthContext";
+import { useCart } from "../providers/cart-context";
 
 const Navbar = () => {
-  const [cart, setCart] = useState([]);
-  const [quantity, setQuantity] = useState(0);
+  /* const [cart, setCart] = useState([]);
+  const [quantity, setQuantity] = useState(0); */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const { logout } = useAuth();
   const navigate = useNavigate();
+   const { cart } = useCart(); // Get cart from context
+  const quantity = cart.reduce((count, item) => count + item.quantity, 0); // Calculate total quantity
+
 
   useEffect(() => {
-    const shoppingCart = localStorage.getItem("cart");
+    const shoppingCart = JSON.parse(localStorage.getItem("cart"));
     const token = localStorage.getItem("accessToken");
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
@@ -26,15 +30,15 @@ const Navbar = () => {
     if (token) {
       setIsAuthenticated(true);
     }
+    let count = 0;
     if (shoppingCart) {
-      let count = 0;
-      JSON.parse(shoppingCart).map((element) => {
+/*       JSON.parse(shoppingCart).map((element) => {
         count = count + element.quantity;
-      });
-      setCart(JSON.parse(shoppingCart));
-      setQuantity(count);
+      }); */
+      /* setCart(JSON.parse(shoppingCart));
+      setQuantity(count); */
     } else {
-      setCart([]);
+      /* setCart([]); */
     }
   }, []);
 
@@ -45,7 +49,7 @@ const Navbar = () => {
     setIsAdmin(false);
     logout();
     navigate("/");
-    window.location.reload(); // Optionally reload the page on logout
+    window.location.reload();
   };
 
   const toggleDropdown = () => {
