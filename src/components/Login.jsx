@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { isAdmin } from "./functions/functions";
 import { useAuth } from "../providers/AuthContext";
+import { host } from "../constants";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Login = () => {
 
     try {
       const responseReq = await fetch(
-        "https://backend-diplom.fly.dev/auth/login",
+        `${host}auth/login`,
         {
           body: JSON.stringify(body),
           method: "POST",

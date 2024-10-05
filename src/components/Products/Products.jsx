@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CardProduct from "./CardProduct";
+import { host } from "../../constants";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +9,7 @@ const Products = () => {
   }, []);
 
   async function getProducts() {
-    const responseReq = await fetch("https://backend-diplom.fly.dev/product", {
+    const responseReq = await fetch(`${host}product`, {
       method: "GET",
     });
 

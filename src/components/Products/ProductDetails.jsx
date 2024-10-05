@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { host } from "../../constants";
 
 const ProductDetails = () => {
   const { name } = useParams();
@@ -18,7 +19,7 @@ const ProductDetails = () => {
   }, [cart]);
 
   async function fetchProductDetails() {
-    const responseReq = await fetch(`https://backend-diplom.fly.dev/product/${name}`);
+    const responseReq = await fetch(`${host}product/${name}`);
     const productData = await responseReq.json();
     setProduct(productData);
   }

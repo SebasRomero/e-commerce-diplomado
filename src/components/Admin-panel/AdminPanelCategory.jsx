@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { host } from "../../constants";
 
 const AdminPanelCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -9,7 +10,7 @@ const AdminPanelCategory = () => {
 
   const fetchCategories = async () => {
     try {
-      const responseReq = await fetch("http://localhost:3000/category/", {
+      const responseReq = await fetch(`${host}category`, {
         method: "GET",
       });
 
@@ -27,7 +28,7 @@ const AdminPanelCategory = () => {
   const handleCreateCategory = async (e) => {
     e.preventDefault();
     try {
-      const responseReq = await fetch("http://localhost:3000/category", {
+      const responseReq = await fetch(`${host}category`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const AdminPanelCategory = () => {
     e.preventDefault();
     try {
       const responseReq = await fetch(
-        `http://localhost:3000/category/${editingCategory._id}`,
+        `${host}category/${editingCategory._id}`,
         {
           method: "PUT",
           headers: {
@@ -85,7 +86,7 @@ const AdminPanelCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      const responseReq = await fetch(`http://localhost:3000/category/${id}`, {
+      const responseReq = await fetch(`${host}category/${id}`, {
         method: "DELETE",
       });
 

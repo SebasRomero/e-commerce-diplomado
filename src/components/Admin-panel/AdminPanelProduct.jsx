@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { host } from "../../constants";
 
 const AdminPanelProduct = () => {
   const [products, setProducts] = useState([]);
@@ -12,7 +13,7 @@ const AdminPanelProduct = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("http://localhost:3000/product/", {
+      const response = await fetch(`${host}product`, {
         method: "GET",
       });
 
@@ -40,7 +41,7 @@ const AdminPanelProduct = () => {
 
       console.log("Creating product with data:", newProductData);
 
-      const response = await fetch("http://localhost:3000/product", {
+      const response = await fetch(`${host}product`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +80,7 @@ const AdminPanelProduct = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3000/product/${editingProduct._id}`,
+        `${host}product${editingProduct._id}`,
         {
           method: "PUT",
           headers: {
@@ -126,7 +127,7 @@ const AdminPanelProduct = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/product/${id}`, {
+      const response = await fetch(`${host}product/${id}`, {
         method: "DELETE",
       });
 
@@ -165,8 +166,13 @@ const AdminPanelProduct = () => {
       <h1 className="text-2xl font-bold text-white mb-4">Productos</h1>
       {error && <p className="text-red-500 mb-4">Error: {error}</p>}
 
-      <form onSubmit={editingProduct ? handleUpdateSubmit : handleCreateProduct} className="mb-4">
-        <h2 className="text-xl text-white mb-2">{editingProduct ? "Actualizar producto" : "Crear nuevo producto"}</h2>
+      <form
+        onSubmit={editingProduct ? handleUpdateSubmit : handleCreateProduct}
+        className="mb-4"
+      >
+        <h2 className="text-xl text-white mb-2">
+          {editingProduct ? "Actualizar producto" : "Crear nuevo producto"}
+        </h2>
         <input
           type="text"
           value={newProductName}
