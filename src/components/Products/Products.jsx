@@ -11,7 +11,7 @@ const Products = () => {
 
   useEffect(() => {
     getProducts();
-    getCategories(); // Fetch categories if you have an endpoint for this
+    getCategories(); 
   }, []);
 
   useEffect(() => {
@@ -38,20 +38,20 @@ const Products = () => {
     response.map((element) => {
       categories.push(element.name);
     });
-    setCategories(categories); // Assuming response is an array of category strings
+    setCategories(categories); 
   }
 
   function filterProducts() {
     let filtered = products;
 
-    // Filter by name
+  
     if (searchTerm) {
       filtered = filtered.filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Filter by selected categories
+  
     if (selectedCategories.length > 0) {
       filtered = filtered.filter((product) =>
         selectedCategories.includes(product.category)

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react"; // Importar useState
+import React, { useEffect, useState } from "react"; 
 import CheckoutCard from "./CheckoutCard";
 import { useNavigate } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid"; // Importar uuid
+import { v4 as uuidv4 } from "uuid"; 
 import { host } from "../constants";
 
 const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
   const [accessToken, setAccessToken] = useState(null);
+  const [discount, setDiscount] = useState(0); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,13 +24,33 @@ const Checkout = () => {
       navigate("/product");
     } else {
       setCart(storedCart);
-      calculateFinalPrice(storedCart);
+      calculateFinalPrice(storedCart); 
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    const storedDiscount = localStorage.getItem("discount");
+    if (storedDiscount) {
+      setDiscount(parseFloat(storedDiscount)); 
     }
   }, []);
 
+ 
+  useEffect(() => {
+    calculateFinalPrice(cart);
+  }, [cart, discount]); 
+
+  const calculateDiscountedPrice = (price) => {
+    if (discount) {
+      return price - (price * (discount / 100)); 
+    }
+    return price; 
+  };
+
   const calculateFinalPrice = (cartItems) => {
     const totalPrice = cartItems.reduce((acc, element) => {
-      return acc + element.quantity * element.price;
+      const discountedPrice = calculateDiscountedPrice(element.price);
+      return acc + element.quantity * discountedPrice;
     }, 0);
     setFinalPrice(totalPrice);
   };
@@ -50,7 +71,6 @@ const Checkout = () => {
 
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
-    calculateFinalPrice(updatedCart);
   };
 
   const handlePay = async () => {
@@ -103,7 +123,9 @@ const Checkout = () => {
               <CheckoutCard
                 key={element.name}
                 name={element.name}
-                price={element.price}
+                originalPrice={element.price} 
+                price={calculateDiscountedPrice(element.price)} 
+                discount={discount > 0} 
                 quantity={element.quantity}
                 image={element.image}
                 onRemove={() => removeItem(element.name)}
@@ -113,7 +135,7 @@ const Checkout = () => {
           <div className="flex flex-col justify-center items-center">
             <div>
               <span className="text-white text-xl">
-                Your final price is {finalPrice}
+                Your final price is {finalPrice.toFixed(2)}
               </span>
             </div>
             <div>

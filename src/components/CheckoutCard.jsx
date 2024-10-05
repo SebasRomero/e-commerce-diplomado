@@ -8,11 +8,22 @@ const CheckoutCard = (props) => {
           alt={props.name}
         />
         <div>
-          <h5>{props.name}</h5>
-          <div className="flex justify-between">
-            <span className="text-xl font-bold text-gray-900 dark:text-black">
-              ${props.price}
-            </span>
+          <h5 className="font-semibold text-lg">{props.name}</h5>
+          <div className="flex items-center justify-between">
+            {props.discount ? (  
+              <div className="flex items-center"> {/* Contenedor flex para agrupar los precios */}
+                <span className="text-xl font-bold text-red-500 line-through mr-1"> {/* Ajustar margen a 1 */}
+                  ${props.originalPrice.toFixed(2)} 
+                </span>
+                <span className="text-xl font-bold text-black">
+                  ${props.price.toFixed(2)}
+                </span>
+              </div>
+            ) : (  
+              <span className="text-xl font-bold text-black">
+                ${props.originalPrice.toFixed(2)}
+              </span>
+            )}
             <span className="text-xl font-bold text-gray-900 dark:text-black">
               x{props.quantity}
             </span>
