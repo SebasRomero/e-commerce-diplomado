@@ -17,36 +17,47 @@ import {PrivateRoutes} from "./providers/PrivateRoutes";
 import { AdminRoutes } from "./providers/PrivateRoutes";
 import { AuthProvider } from "./providers/AuthContext";
 import Profile from "./components/profile/Profile";
+import Footer from "./components/Home/Footer";
 
 function App() {
   return (
     <AuthProvider>
       <CartProvider>
         <BrowserRouter>
-          <Navbar />
-          <Routes>
-            {/* Non-admin routes */}
-            <Route element={<PrivateRoutes />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/product" element={<Products />} />
-              <Route path="/product/:name" element={<ProductDetails />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/about" element={<About_us />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+          <div className="flex flex-col min-h-screen">
+            {/* Navbar is at the top */}
+            <Navbar />
+            
+            {/* The main content area should grow to fill space between Navbar and Footer */}
+            <div className="flex-grow">
+              <Routes>
+                {/* Non-admin routes */}
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/product" element={<Products />} />
+                  <Route path="/product/:name" element={<ProductDetails />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/about" element={<About_us />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/profile" element={<Profile />} />
+                </Route>
 
-            {/* Admin routes */}
-            <Route element={<AdminRoutes />}>
-              <Route path="/admin-panel" element={<AdminPanel />} />
-              <Route path="/admin-panel/product" element={<AdminPanelProduct />} />
-              <Route path="/admin-panel/category" element={<AdminPanelCategory />} />
-              <Route path="/admin-panel/order" element={<Orders />} />
-            </Route>
+                {/* Admin routes */}
+                <Route element={<AdminRoutes />}>
+                  <Route path="/admin-panel" element={<AdminPanel />} />
+                  <Route path="/admin-panel/product" element={<AdminPanelProduct />} />
+                  <Route path="/admin-panel/category" element={<AdminPanelCategory />} />
+                  <Route path="/admin-panel/order" element={<Orders />} />
+                </Route>
 
-            {/* Unauthenticated routes */}
-            <Route path="/login" element={<Login />} />
-          </Routes>
+                {/* Unauthenticated routes */}
+                <Route path="/login" element={<Login />} />
+              </Routes>
+            </div>
+
+            {/* Footer is at the bottom */}
+            <Footer />
+          </div>
         </BrowserRouter>
       </CartProvider>
     </AuthProvider>
@@ -54,3 +65,4 @@ function App() {
 }
 
 export default App;
+

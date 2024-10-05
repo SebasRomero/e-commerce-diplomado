@@ -74,9 +74,9 @@ const Products = () => {
   return (
     <>
       <div className="flex justify-center items-center pt-6">
-        <div className="flex w-[95%]">
+        <div className="flex flex-col md:flex-row lg:flex-row  w-[95%]">
           {/* Filters */}
-          <div className="w-[15%] mb-[35px] mr-[20px] bg-gray-300 p-4">
+          <div className="w-full md:w-[15%] mb-[35px] mr-[20px] bg-gray-300 p-4">
             <div>
               <h3 className="font-bold mb-2">Search by name</h3>
               <input
