@@ -19,12 +19,12 @@ const addToCart = (product) => {
 
     if (existingProductIndex !== -1) {
       const updatedCart = [...prevCart];
-      updatedCart[existingProductIndex].quantity += 1; // Increment the quantity for existing product
+      updatedCart[existingProductIndex].quantity += 1; 
       return updatedCart;
     } else {
       return [
         ...prevCart,
-        { ...product, quantity: 1 }, // Add new product with quantity 1
+        { ...product, quantity: 1 }, 
       ];
     }
   });

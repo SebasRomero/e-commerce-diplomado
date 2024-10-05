@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../providers/cart-context"; // Import the cart context
+import { useCart } from "../../providers/cart-context";
 
 export const CardProduct = (props) => {
-  const { addToCart } = useCart(); // Get addToCart from context
+  const { addToCart } = useCart(); 
   const navigate = useNavigate();
 
   const handleAddToCart = (e) => {
-    e.preventDefault(); // Prevent default behavior
-    e.stopPropagation(); // Stops the event from bubbling up
+    e.preventDefault(); 
+    e.stopPropagation(); 
     addToCart({ name: props.name, price: props.price, image: props.image });
   };
 
@@ -35,7 +35,7 @@ export const CardProduct = (props) => {
             ${props.price}
           </span>
           <button
-            onClick={handleAddToCart} // Ensure this line calls handleAddToCart
+            onClick={handleAddToCart} 
             className="text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
           >
             Add to cart

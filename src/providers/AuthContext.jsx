@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       setUser(storedUser);
     }
-    setLoading(false); // Move this outside the condition to ensure loading is set to false
+    setLoading(false); 
   }, []);
 
   const login = (userToken, userData) => {

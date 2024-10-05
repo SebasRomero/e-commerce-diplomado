@@ -12,7 +12,7 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [loginError, setLoginError] = useState(""); // State to capture login error
+  const [loginError, setLoginError] = useState("");
   const { login } = useAuth();
 
 const onSubmit = async (data) => {
@@ -34,12 +34,10 @@ const onSubmit = async (data) => {
     console.log(response)
 
     if (response.access_token) {
-      // Pass user data to the login function
       login(response.access_token, response.user);
       localStorage.setItem("accessToken", response.access_token);
       localStorage.setItem("user", JSON.stringify(response.user));
       
-      // You can remove the window.location.reload() to avoid the unwanted reload
       if (isAdmin(response.user.roles)) {
         navigate("/admin-panel/product");
         window.location.reload()
@@ -48,7 +46,6 @@ const onSubmit = async (data) => {
         window.location.reload()
       }
     } else {
-      // Handle login error
       setLoginError("Invalid email or password. Please try again.");
     }
   } catch (error) {

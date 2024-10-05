@@ -29,7 +29,7 @@ const Footer = () => {
           <div className="mt-2">
             <h5 className="text-md font-semibold">Descuentos</h5>
             <select
-              value={discount} // Usa el estado para establecer el valor del select
+              value={discount}
               onChange={handleDiscountChange}
               className="bg-gray-700 text-white px-3 py-1 rounded"
             >
