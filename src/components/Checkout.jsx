@@ -24,8 +24,8 @@ const Checkout = () => {
   return (
     <div className="flex justify-center items-center">
       <div className="w-[95%]">
-        <div className="w-full flex justify-evenly items-center">
-          <div className="flex flex-col h-[90vh] items-center justify-center">
+        <div className="w-full flex flex-col justify-evenly items-center">
+          <div className="flex flex-col pt-[10%] items-center justify-center">
             {cart.map((element) => {
               return (
                 <CheckoutCard
@@ -40,7 +40,7 @@ const Checkout = () => {
           </div>
           <div>
             <div>
-              <span className="text-white text-xl">Your final price is {finalPrice}</span>
+              <span className="text-white text-xl my-10">Your final price is {finalPrice}</span>
             </div>
             <div>
               <button className="w-32 h-12 bg-orange-500">Pay</button>

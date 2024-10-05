@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { host } from "../../constants";
 
 const Orders = () => {
@@ -6,38 +6,38 @@ const Orders = () => {
   const [error, setError] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
 
-  const fetchOrders = async () => {
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setAccessToken(token);
+      fetchOrders(token); 
+    }
+  }, []);
+
+  const fetchOrders = async (token) => {
     try {
       const response = await fetch(`${host}product/orders`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!response.ok) {
-        throw new Error("Error fetching orders");
-      }
-
       const data = await response.json();
 
-      if (Array.isArray(data.orders)) {
-        setOrders(data.orders);
+      if (response.ok) { 
+        if (Array.isArray(data.orders)) {
+          setOrders(data.orders);
+        } else {
+          throw new Error("Unexpected response format");
+        }
       } else {
-        throw new Error("Unexpected response format");
+        throw new Error(data.message || "Failed to fetch orders");
       }
     } catch (error) {
       setError(error.message);
     }
   };
-
-  useEffect(() => {
-    fetchOrders();
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      setAccessToken(accessToken);
-    }
-  }, []);
 
   return (
     <div className="bg-gray-800 p-6 rounded-lg shadow-md">
