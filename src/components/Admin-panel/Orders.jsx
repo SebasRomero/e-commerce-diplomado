@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { host } from "../../constants";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:3000/product/orders", {
+      const response = await fetch(`${host}product/orders`, {
         method: "GET",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       if (!response.ok) {
@@ -28,6 +33,10 @@ const Orders = () => {
 
   useEffect(() => {
     fetchOrders();
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setAccessToken(accessToken);
+    }
   }, []);
 
   return (

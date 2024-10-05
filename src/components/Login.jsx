@@ -15,44 +15,45 @@ const Login = () => {
   const [loginError, setLoginError] = useState(""); // State to capture login error
   const { login } = useAuth();
 
-  const onSubmit = async (data) => {
-    const body = {
-      email: data.Email,
-      password: data.Password,
-    };
-
-    try {
-      const responseReq = await fetch(`${host}auth/login`, {
-        body: JSON.stringify(body),
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const response = await responseReq.json();
-
-      if (response.access_token) {
-        login(response.access_token);
-        localStorage.setItem("accessToken", response.access_token);
-        localStorage.setItem("user", JSON.stringify(response.user));
-
-        if (isAdmin(response.user.roles)) {
-          navigate("/admin-panel");
-          window.location.reload();
-        } else {
-          navigate("/product");
-          window.location.reload();
-        }
-      } else {
-        // Handle login error
-        setLoginError("Invalid email or password. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setLoginError("An error occurred during login. Please try again later.");
-    }
+const onSubmit = async (data) => {
+  const body = {
+    email: data.Email,
+    password: data.Password,
   };
+
+  try {
+    const responseReq = await fetch(`${host}auth/login`, {
+      body: JSON.stringify(body),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const response = await responseReq.json();
+
+    if (response.access_token) {
+      // Pass user data to the login function
+      login(response.access_token, response.user);
+      localStorage.setItem("accessToken", response.access_token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+      
+      // You can remove the window.location.reload() to avoid the unwanted reload
+      if (isAdmin(response.user.roles)) {
+        navigate("/admin-panel/product");
+      } else {
+        navigate("/product");
+      }
+    } else {
+      // Handle login error
+      setLoginError("Invalid email or password. Please try again.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    setLoginError("An error occurred during login. Please try again later.");
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center pt-[10%]">

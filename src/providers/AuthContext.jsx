@@ -4,6 +4,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
       setToken(storedToken);
       setUser(storedUser);
     }
+    setLoading(false); // Move this outside the condition to ensure loading is set to false
   }, []);
 
   const login = (userToken, userData) => {
@@ -31,6 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const isAuthenticated = !!token;
   const isAdmin = user?.roles?.includes("admin");
+  console.log(isAdmin);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isAdmin, login, logout }}>
