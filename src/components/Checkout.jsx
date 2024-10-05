@@ -84,6 +84,8 @@ const Checkout = () => {
       console.log("Pedido actualizado:", result);
   
       alert("Congratulations, you are now one of our customers!");
+
+      localStorage.removeItem("cart")
   
       navigate("/"); 
     } catch (error) {
