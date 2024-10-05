@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate} from "react-router-dom";
 
-/* eslint-disable react/prop-types */
+
 export const CardProduct = (props) => {
 
   const [cart, setCart] = useState(() => {
@@ -27,7 +27,7 @@ export const CardProduct = (props) => {
       } else {
         return [
           ...prevCart,
-          { name: props.name, price: props.price, quantity: 1 },
+          { name: props.name, price: props.price, quantity: 1, image: props.image },
         ];
       }
     });

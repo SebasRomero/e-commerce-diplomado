@@ -1,9 +1,13 @@
-/* eslint-disable react/prop-types */
+
 const CheckoutCard = (props) => {
   return (
     <div className="w-[300px] bg-white border-gray-900 shadow mb-12">
       <div className="px-5  ">
-        <div>image</div>
+      <img
+            className="w-full h-64 object-cover mb-4"
+            src={props.image} 
+            alt={props.name}
+          />
 
         <div>
           <h5>{props.name}</h5>
