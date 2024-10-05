@@ -14,7 +14,6 @@ const Checkout = () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
       setAccessToken(token);
-     
     }
   }, []);
 
@@ -36,16 +35,18 @@ const Checkout = () => {
   };
 
   const removeItem = (name) => {
-    const updatedCart = cart.map((item) => {
-      if (item.name === name) {
-        if (item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
-        } else {
-          return null;
+    const updatedCart = cart
+      .map((item) => {
+        if (item.name === name) {
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 };
+          } else {
+            return null;
+          }
         }
-      }
-      return item;
-    }).filter(item => item !== null);
+        return item;
+      })
+      .filter((item) => item !== null);
 
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
@@ -57,49 +58,47 @@ const Checkout = () => {
       console.error("El carrito está vacío");
       return;
     }
-  
+
     const orderNumber = uuidv4();
     const data = {
       orderNumber: orderNumber,
       price: finalPrice,
     };
-  
+
     console.log("Enviando datos:", JSON.stringify(data));
-  
+
     try {
       const response = await fetch(`${host}product/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`, 
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(data),
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al actualizar el pedido");
       }
-  
+
       const result = await response.json();
       console.log("Pedido actualizado:", result);
-  
+
       alert("Congratulations, you are now one of our customers!");
 
-      localStorage.removeItem("cart")
-  
-      navigate("/"); 
+      localStorage.removeItem("cart");
+
+      navigate("/");
     } catch (error) {
       console.error("Error:", error);
     }
   };
-  
-  
 
   return (
     <div className="flex justify-center items-center">
       <div className="w-[95%]">
-        <div className="w-full flex justify-evenly items-center">
-          <div className="flex flex-col h-[90vh] items-center justify-center">
+        <div className="w-full flex flex-col py-20 justify-evenly items-center">
+          <div className="flex flex-col h-[30%] items-center justify-center">
             {cart.map((element) => (
               <CheckoutCard
                 key={element.name}
@@ -111,7 +110,7 @@ const Checkout = () => {
               />
             ))}
           </div>
-          <div>
+          <div className="flex flex-col justify-center items-center">
             <div>
               <span className="text-white text-xl">
                 Your final price is {finalPrice}

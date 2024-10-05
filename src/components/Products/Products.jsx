@@ -23,6 +23,7 @@ const Products = () => {
       method: "GET",
     });
     const response = await responseReq.json();
+    console.log(response);
     setProducts(response);
   }
 
@@ -108,18 +109,17 @@ const Products = () => {
 
           {/* Products */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((element) => {
-            return (
-              <CardProduct
-                key={element._id}
-                id={element._id}
-                name={element.name}
-                price={element.price}
-                image={element.image}
-              />
-            );
-          })}
-
+            {filteredProducts.map((element) => {
+              return (
+                <CardProduct
+                  key={element._id}
+                  id={element._id}
+                  name={element.name}
+                  price={element.price}
+                  image={element.image}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
