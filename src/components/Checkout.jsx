@@ -7,7 +7,16 @@ import { host } from "../constants";
 const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [finalPrice, setFinalPrice] = useState(0);
+  const [accessToken, setAccessToken] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      setAccessToken(token);
+     
+    }
+  }, []);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart"));
@@ -55,13 +64,14 @@ const Checkout = () => {
       price: finalPrice,
     };
   
-    console.log("Enviando datos:", JSON.stringify(data)); 
+    console.log("Enviando datos:", JSON.stringify(data));
   
     try {
-      const response = await fetch(`http://localhost:3000/product/orders`, {
+      const response = await fetch(`${host}product/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`, 
         },
         body: JSON.stringify(data),
       });
@@ -72,11 +82,15 @@ const Checkout = () => {
   
       const result = await response.json();
       console.log("Pedido actualizado:", result);
-      navigate("/order-confirmation"); // Cambia a la ruta de tu página de confirmación
+  
+      alert("Congratulations, you are now one of our customers!");
+  
+      navigate("/"); 
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  
   
 
   return (
