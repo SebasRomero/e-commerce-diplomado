@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { isAdmin } from "./functions/functions";
@@ -11,8 +12,9 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const [loginError, setLoginError] = useState(""); // State to capture login error
   const { login } = useAuth();
+
   const onSubmit = async (data) => {
     const body = {
       email: data.Email,
@@ -20,31 +22,35 @@ const Login = () => {
     };
 
     try {
-      const responseReq = await fetch(
-        `${host}auth/login`,
-        {
-          body: JSON.stringify(body),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const responseReq = await fetch(`${host}auth/login`, {
+        body: JSON.stringify(body),
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const response = await responseReq.json();
-      login(response.access_token)
-      localStorage.setItem("accessToken", response.access_token);
-      localStorage.setItem("user", JSON.stringify(response.user));
-      if (isAdmin(response.user.roles)) {
-        navigate("/admin-panel");
-        window.location.reload();
+
+      if (response.access_token) {
+        login(response.access_token);
+        localStorage.setItem("accessToken", response.access_token);
+        localStorage.setItem("user", JSON.stringify(response.user));
+
+        if (isAdmin(response.user.roles)) {
+          navigate("/admin-panel");
+          window.location.reload();
+        } else {
+          navigate("/product");
+          window.location.reload();
+        }
       } else {
-        navigate("/product");
-        window.location.reload();
+        // Handle login error
+        setLoginError("Invalid email or password. Please try again.");
       }
-      console.log(response);
     } catch (error) {
       console.error("Error:", error);
+      setLoginError("An error occurred during login. Please try again later.");
     }
   };
 
@@ -55,23 +61,27 @@ const Login = () => {
         className="flex flex-col justify-center items-center bg-gray-900 py-24 w-[15%]"
       >
         <h2 className="text-white">Login</h2>
+
+        {/* Display login error in red */}
+        {loginError && <p className="text-red-500">{loginError}</p>}
+
         <div className="py-10">
           <input
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             placeholder="Email"
-            {...register("Email", { required: true })}
+            {...register("Email", { required: "Email is required" })}
           />
+          {errors.Email && <p className="text-red-500">{errors.Email.message}</p>}
         </div>
         <div>
           <input
             type="password"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Password"
-            {...register("Password", {
-              required: true,
-            })}
+            {...register("Password", { required: "Password is required" })}
           />
+          {errors.Password && <p className="text-red-500">{errors.Password.message}</p>}
         </div>
 
         <div className="pt-10">
